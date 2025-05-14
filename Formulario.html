@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario de Contacto</title>
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+ 
+  <header>Ada Lovelace</header>
+
+
+  <div class="container">
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="Biografía .html">Biografia</a>
+      <a href="Datos.html">Datos</a>
+      <a href="Galería.html">Galería</a>
+      
+    </nav>
+
+   
+    <h1 style="text-align: center;">Formulario de Contacto</h1>
+    <form id="formulario" method="post">
+      <label for="nombre">Nombre:</label>
+      <input type="text" name="nombre" id="nombre" required>
+
+      <label for="correo">Correo electrónico:</label>
+      <input type="email" name="correo" id="correo" required>
+
+      <label for="mensaje">Mensaje:</label>
+      <textarea name="mensaje" id="mensaje" rows="5" required></textarea>
+
+      <button type="submit">Enviar</button>
+    </form>
+
+    <div id="respuesta"></div>
+  </div>
+
+  <footer>
+    Elba Atena Huerta Martinez
+        22190329
+        626    
+        <img src="./Imagenes/pagina.jpg" style= "width:75px;height:64px;">
+  </footer>
+
+  <script>
+    const form = document.getElementById('formulario');
+    const respuesta = document.getElementById('respuesta');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const datos = new FormData(form);
+
+      fetch('procesar.php', {
+        method: 'POST',
+        body: datos
+      })
+      .then(res => res.text())
+      .then(data => {
+        respuesta.innerHTML = data;
+        form.reset();
+      })
+      .catch(error => {
+        respuesta.innerHTML = 'Error al enviar el formulario';
+        console.error(error);
+      });
+    });
+  </script>
+
+</body>
+</html>
